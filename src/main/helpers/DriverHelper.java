@@ -1,7 +1,5 @@
 package helpers;
 
-import com.codeborne.selenide.Configuration;
-import com.codeborne.selenide.Selenide;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,6 +10,8 @@ public class DriverHelper {
 
     public static void configureDriver() {
         //Основные настройки
+        driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
         Configuration.browser = "chrome";
 //        Configuration.headless = true;
         Configuration.timeout = 240000;
