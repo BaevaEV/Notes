@@ -25,7 +25,7 @@ git clone https://github.com/BaevaEV/Notes.git
 
 src/main/java/api: Исходный код приложения api  и ui тестов
 
-![img_6.png](img_6.png)
+![img_7.png](img_7.png)
 
 
 -----------
