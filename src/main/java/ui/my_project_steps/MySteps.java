@@ -70,35 +70,20 @@ public class MySteps {
     public void deleteAllNotes() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
         notes = driver.findElements(By.xpath("//div[contains(@id,'note-container')]"));
-
         Iterator<WebElement> iterator = notes.iterator();
         while (iterator.hasNext()) {
             WebElement note = iterator.next();
             int m = countNote();
             if (m != 0) {
                 WebElement title1 = new WebDriverWait(driver, Duration.ofSeconds(20))
-                        .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@style,'display')]/div["+m+"]")));
-                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@style,'display')]/div["+m+"]/div[2]/img[2]"))).click();
+                        .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@style,'display')]/div[" + m + "]")));
+                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@style,'display')]/div[" + m + "]/div[2]/img[2]"))).click();
                 mainPage.clockDeleteYesButton();
                 iterator.remove();
             } else {
-                // Заметок больше нет, выходим из цикла
                 break;
             }
         }
     }
-
-//
-//    @Step("Удаление всех заметок")
-//    public void deleteAllNotes() {
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-//        notes = driver.findElements(By.xpath("//div[contains(@class,'Card_fullscreenBtnBar')]//img[2]"));
-//        while (!notes.isEmpty()) {
-//            WebElement firstNote = notes.get(0);
-//            mainPage.clockDeleteYesButton();
-
-
-
-
 }
 

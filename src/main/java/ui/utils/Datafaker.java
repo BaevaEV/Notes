@@ -5,7 +5,7 @@ import net.datafaker.Faker;
 public class Datafaker {
     public String generateName(){
         Faker faker = new Faker();
-        return faker.bigBangTheory().character();
+        return faker.name().name();
     }
 
     public String generateTextTitle(){

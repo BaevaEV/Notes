@@ -47,6 +47,7 @@ public class RegistrationTest extends TestBase {
 
     @AfterEach
     public void afterTest() {
+        this.makeScreenshot(driver);
         try {
             dbConnection.executeParameterizedUpdateWithWait(deleteQueryUsersRoles, login, 250);
             dbConnection.executeParameterizedUpdateWithWait(deleteQueryUsers, login, 250);

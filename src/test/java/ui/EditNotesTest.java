@@ -94,6 +94,7 @@ public class EditNotesTest extends TestBase {
             dbConnection.executeParameterizedUpdateWithWait(sqlDeleteNotes, login, 0);
             dbConnection.closeConnection();
         });
+        this.makeScreenshot(driver);
     }
 }
 

@@ -45,4 +45,9 @@ public class DeletedNotesTest extends TestBase {
         });
     }
 
+    @AfterEach
+    public void afterTest() {
+        this.makeScreenshot(driver);
+    }
+
 }

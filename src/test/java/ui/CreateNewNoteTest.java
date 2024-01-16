@@ -45,7 +45,7 @@ public class CreateNewNoteTest extends TestBase {
 
     @Test
     @DisplayName(value = "Успешное создание заметки")
-    public void createNoteHappyPathTest (){
+    public void createNoteHappyPathTest() {
         step("1. Создание заметки и заполнение информации", () -> {
             mainPage.addNoteButtonClick();
             mySteps.fillInfoForNote(title, content, "Красный");
@@ -57,11 +57,11 @@ public class CreateNewNoteTest extends TestBase {
             String noteId = dbConnection.executeParameterizedQueryWithWait(sqlSelectFindNote, columnName, login, 200);
             noteTitle = mainPage.getNoteTitle(noteId);
             noteContent = mainPage.getNoteContent(noteId);
-            noteColor = mainPage.getNoteColor(noteId).replace("-color","");
+            noteColor = mainPage.getNoteColor(noteId).replace("-color", "");
         });
         step("3. Сравнение и проверка отображаемых данных на соответствие изначально введенным", () -> {
-            Assertions.assertEquals(title, noteTitle, "Заголовок не совпадает с "+noteTitle+".");
-            Assertions.assertEquals(content, noteContent, "Текст заметки не совпадает с "+noteContent+".");
+            Assertions.assertEquals(title, noteTitle, "Заголовок не совпадает с " + noteTitle + ".");
+            Assertions.assertEquals(content, noteContent, "Текст заметки не совпадает с " + noteContent + ".");
             Assertions.assertEquals(colorUtility.getColorStyle("Красный"), noteColor, "Цвет не совпадает.");
         });
     }
@@ -74,7 +74,7 @@ public class CreateNewNoteTest extends TestBase {
         for (String colorName : colorNames) {
             step("1. Создание заметки и заполнение информации", () -> {
                 mainPage.addNoteButtonClick();
-                mySteps.fillInfoForNote("Заметка "+ colorName +"", content, colorName);
+                mySteps.fillInfoForNote("Заметка " + colorName + "", content, colorName);
             });
             step("2. Сохранение заметки", () -> {
                 notePage.saveNewNote();
@@ -83,7 +83,7 @@ public class CreateNewNoteTest extends TestBase {
                 String noteId = dbConnection.executeParameterizedQueryWithWait(sqlSelectFindNote, columnName, login, 250);
                 noteTitle = mainPage.getNoteTitle(noteId);
                 noteContent = mainPage.getNoteContent(noteId);
-                noteColor = mainPage.getNoteColor(noteId).replace("-color","");
+                noteColor = mainPage.getNoteColor(noteId).replace("-color", "");
             });
             step("4. Сравнение и проверка отображаемых данных на соответствие изначально введенным", () -> {
                 Assertions.assertEquals("Заметка " + colorName, noteTitle, "Заголовок не совпадает.");
@@ -100,5 +100,7 @@ public class CreateNewNoteTest extends TestBase {
             dbConnection.executeParameterizedUpdateWithWait(sqlDeleteNotes, login, 0);
             dbConnection.closeConnection();
         });
-        }
+        this.makeScreenshot(driver);
+    }
+
 }

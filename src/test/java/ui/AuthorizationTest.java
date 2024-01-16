@@ -64,6 +64,7 @@ public class AuthorizationTest extends TestBase {
     @AfterEach
     public void afterTest() {
         dbConnection.closeConnection();
+        this.makeScreenshot(driver);
     }
 
 }

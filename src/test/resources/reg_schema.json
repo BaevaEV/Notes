@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "login": {
+      "type": "string"
+    },
+    "password": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "notes": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "content": {
+              "type": "string"
+            },
+            "color": {
+              "type": "string"
+            },
+            "priority": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "content",
+            "color",
+            "priority"
+          ]
+        }
+      ]
+    }
+  },
+  "required": [
+    "login",
+    "password",
+    "email",
+    "notes"
+  ]
+}
