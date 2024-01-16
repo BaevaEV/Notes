@@ -24,7 +24,7 @@ public class AuthorizationTest extends TestBase {
 
 
     @Test
-    @DisplayName(value = "Успешная авторизация существующего пользователя")
+    @DisplayName(value = "Авторизация существующего пользователя")
     public void authHappyPathTest (){
         step("1. Вход в приложение", () -> {
             authPage.goToAuthPage();
@@ -40,7 +40,7 @@ public class AuthorizationTest extends TestBase {
     }
 
     @Test
-    @DisplayName(value = "Успешная авторизация нового пользователя")
+    @DisplayName(value = "Авторизация нового пользователя")
     public void authNewClientHappyPathTest (){
         step("1. Вход в приложение", () -> {
             authPage.goToAuthPage();
