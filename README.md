@@ -2,19 +2,21 @@ Notes
 
 Проект "Notes" представляет собой комплексное решение для автоматизации тестирования API и UI с использованием технологий Selenium, RestAssured, JUnit 5 и языка программирования Java. Проект разработан с учетом лучших практик автоматизации тестирования и предоставляет подробные отчеты с использованием Allure, включая скриншоты к каждому тесту.
 
-Требования
-Java 11
-Maven
-Зависимости
-Selenium WebDriver
-RestAssured
-JUnit 5
+Требования 
+Java 11 
+Maven 
+Зависимости 
+Selenium WebDriver 
+RestAssured 
+JUnit 5 
 Allure
+
+
 Установка и настройка
+
 Клонировать репозиторий:
 
-bash
-Copy code
+
 git clone https://github.com/BaevaEV/Notes.git
 
 Структура проекта
