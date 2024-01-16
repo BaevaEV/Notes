@@ -35,7 +35,7 @@ public class RegistrationTest {
 
 
     @Test
-    @DisplayName(value = "Проверка регистрации только с обязательными полями")
+    @DisplayName(value = "Проверка регистрации со всеми полями")
     public void registryWithAllFieldsFieldsTest() {
         userCreationDTO = UserCreationDTO.builder().login(newUser.getLogin())
                 .password(newUser.getPassword())
@@ -49,7 +49,7 @@ public class RegistrationTest {
 
 
     @Test
-    @DisplayName(value = "Проверка регистрации только с обязательными полями")
+    @DisplayName(value = "Проверка регистрации только с логином")
     public void registryOnlyWithLoginTest() {
         userCreationDTO = UserCreationDTO.builder().login(newUser.getLogin())
                 .build();

@@ -21,7 +21,7 @@ public class CreateNewNotes {
     }
 
     @Test
-    @DisplayName("Создание и удаление заметки, проверка schema.json")
+    @DisplayName("Создание и удаление заметки")
     public void createNewUserAndNote() {
         userCreationDTO = UserCreationDTO.builder().login(newUser.getLogin())
                 .password(newUser.getPassword())

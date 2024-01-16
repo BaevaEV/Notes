@@ -36,7 +36,7 @@ public class AuthorizationTest {
     }
 
     @Test
-    @DisplayName("Авторизация несуществующего пользователя")
+    @DisplayName("Авторизация только с логином")
     public void uauthorizationNewClientTest() {
         Map<String, String> loginParams = new HashMap<>();
         loginParams.put("username", "BAEVA");
