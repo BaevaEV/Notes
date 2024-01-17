@@ -1,7 +1,7 @@
 package api.dto;
 
 
-import lombok.*;
+import lombok.Data;
 
 @Data
 public class Note {
@@ -9,6 +9,17 @@ public class Note {
     private String name;
     private String content;
     private String color;
-    private String priority;
+    private int priority;
 
+
+    public Note(String name, String content, String color, int priority) {
+        this.name = name;
+        this.content = content;
+        this.color = color;
+        this.priority = priority;
+    }
+
+    public Note() {
+
+    }
 }

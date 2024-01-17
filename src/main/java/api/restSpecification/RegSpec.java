@@ -5,6 +5,8 @@ import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.http.ContentType;
+import io.restassured.module.jsv.JsonSchemaValidator;
+import io.restassured.parsing.Parser;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
@@ -30,6 +32,12 @@ public class RegSpec {
                 .expectStatusCode(status)
                 .build();
     }
+
+    public void createJsonSchemaValidationSpec(String schemaPath) {
+        RestAssured.defaultParser = Parser.JSON;
+        responseSpecification.expect().body(JsonSchemaValidator.matchesJsonSchemaInClasspath(schemaPath));
+    }
+
 
     public void postRegistration(){
         RestAssured.given(requestSpecification).log().all()

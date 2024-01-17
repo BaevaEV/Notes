@@ -1,7 +1,7 @@
 package api.dto;
 
 import lombok.Data;
-import ui.utils.Datafaker;
+import utils.Datafaker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +16,10 @@ public class User {
     private List<Note> notes;
 
     public void setDefaultRoles() {
-        Role defaultRole = new Role(2, "Role"); // Передаем id и name
+        Datafaker dataFaker = new Datafaker();
+        String roleName = dataFaker.generateRole();
+
+        Role defaultRole = new Role(2, roleName); // Передаем id и name
         List<Role> defaultRolesList = new ArrayList<>();
         defaultRolesList.add(defaultRole);
         this.roles = defaultRolesList;
@@ -33,6 +36,7 @@ public class User {
         newUser.setPassword("123456");
         newUser.setEmail("testtest@com");
         newUser.setDefaultRoles();
+        newUser.setDefaultNotes();
         return newUser;
     }
 
@@ -52,7 +56,7 @@ public class User {
         newNote.setName(name);
         newNote.setContent(content);
         newNote.setColor(color);
-        newNote.setPriority(String.valueOf(priority));
+        newNote.setPriority(priority);
 
         List<Note> newListNote = new ArrayList<>();
         newListNote.add(newNote);
@@ -60,6 +64,17 @@ public class User {
         this.notes = newListNote;
 
         return newListNote;
+    }
+
+    public void setDefaultNotes() {
+        Datafaker dataFaker = new Datafaker();
+        String textTitle = dataFaker.generateTextTitle();
+        String textContent = dataFaker.generateTextTitle();
+
+        Note defaultNote = new Note(textTitle, textContent, "Красный", 1);
+        List<Note> defaultNotesList = new ArrayList<>();
+        defaultNotesList.add(defaultNote);
+        this.notes = defaultNotesList;
     }
 
 }

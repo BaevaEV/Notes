@@ -4,8 +4,8 @@ import org.junit.jupiter.api.*;
 import ui.db.DBConnection;
 import ui.my_project_steps.MySteps;
 import ui.pages.TestBase;
-import ui.utils.Color;
-import ui.utils.Datafaker;
+import utils.Color;
+import utils.Datafaker;
 
 import java.util.Set;
 

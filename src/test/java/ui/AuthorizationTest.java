@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 import ui.db.DBConnection;
 import ui.my_project_steps.MySteps;
 import ui.pages.TestBase;
-import ui.utils.Datafaker;
+import utils.Datafaker;
 
 import static io.qameta.allure.Allure.step;
 

@@ -8,8 +8,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import ui.db.DBConnection;
 import ui.my_project_steps.MySteps;
 import ui.pages.TestBase;
-import ui.utils.Color;
-import ui.utils.Datafaker;
+import utils.Color;
+import utils.Datafaker;
 
 import java.time.Duration;
 

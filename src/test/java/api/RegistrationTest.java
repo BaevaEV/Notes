@@ -20,6 +20,7 @@ public class RegistrationTest {
     public void before() {
         newUser = new User();
         newUser = newUser.generateUser();
+
     }
 
     @Test
@@ -56,5 +57,22 @@ public class RegistrationTest {
         regSpec.createRequestSpecReg(userCreationDTO);
         regSpec.createResponseSpecReg(500);
         regSpec.postRegistration();
+    }
+
+    @Test
+    @DisplayName("Создание пользователя и заметки")
+    public void createNewUserAndNote() {
+        userCreationDTO = UserCreationDTO.builder().login(newUser.getLogin())
+                .password(newUser.getPassword())
+                .email((newUser.getEmail()))
+                .roles(newUser.getRoles())
+                .notes(newUser.getNotes())
+                .build();
+
+        regSpec.createRequestSpecReg(userCreationDTO);
+        regSpec.createResponseSpecReg(201);
+        regSpec.createJsonSchemaValidationSpec("schemes/reg_schema.json");
+        regSpec.postRegistration();
+
     }
 }

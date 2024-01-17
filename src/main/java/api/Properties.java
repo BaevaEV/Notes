@@ -7,6 +7,9 @@ public final class Properties {
 
     public static final String LOGIN_PATH = "/api/login";
 
-    public static final String CREATE_USER_ENDPOINT = "/api/createUser";
+    public static final String USER_PATH = "/api/users/";
+
+
+
 
 }

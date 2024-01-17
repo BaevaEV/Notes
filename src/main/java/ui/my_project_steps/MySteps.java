@@ -7,7 +7,7 @@ import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import ui.utils.Color;
+import utils.Color;
 
 import java.time.Duration;
 import java.util.Iterator;
@@ -34,7 +34,7 @@ public class MySteps {
 
     @Step("Создаем заметку {Title}")
     public void fillInfoForNote(String Title, String Content, String Color) {
-        ui.utils.Color colorUtility = new Color();
+        utils.Color colorUtility = new Color();
         notePage.fillNoteTitleField(Title);
         notePage.addNoteContent(Content);
         notePage.clickAddColor(colorUtility.getColorStyle(Color));

@@ -31,17 +31,16 @@ public class AuthorizationTest {
         loginParams.put("username", "EBAEVA");
         loginParams.put("password", "Start123");
         authSpec.getAccessTokenBadRequest(loginParams);
-        authSpec.createResponseSpecAuth(403);
 
     }
+
 
     @Test
     @DisplayName("Авторизация только с логином")
     public void uauthorizationNewClientTest() {
         Map<String, String> loginParams = new HashMap<>();
         loginParams.put("username", "BAEVA");
-        authSpec.getAccessToken(loginParams);
-        authSpec.createResponseSpecAuth(500);
+        authSpec.getAccessTokenBadRequest(loginParams);
     }
 
 }
