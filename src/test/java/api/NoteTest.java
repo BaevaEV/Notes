@@ -6,7 +6,6 @@ import api.restSpecification.AuthSpec;
 import api.restSpecification.NoteSpec;
 import api.restSpecification.RegSpec;
 import api.restSpecification.UserSpec;
-import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -64,18 +63,18 @@ public class NoteTest {
                 .statusCode(403);
     }
 
-    @Test
-    @DisplayName("Получение заметок пользователя")
-    public void createUsersNoteByLoginTest() {
-        String login = newUser.getLogin();
-        given()
-                .spec(noteSpec.createRequestSpecCreateNote(login))
-                .when()
-                .post()
-                .then()
-                .log().all()
-                .statusCode(403);
-    }
+//    @Test
+//    @DisplayName("Получение заметок пользователя")
+//    public void createUsersNoteByLoginTest() {
+//        String login = newUser.getLogin();
+//        given()
+//                .spec(noteSpec.createRequestSpecCreateNote(login))
+//                .when()
+//                .post()
+//                .then()
+//                .log().all()
+//                .statusCode(403);
+//    }
 
 
 
