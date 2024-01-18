@@ -27,16 +27,17 @@ git clone https://github.com/BaevaEV/Notes.git
 
 ## **Общая структура проекта**
 
-![img_5.png](img_5.png)
+![img.png](readme_images/img.png)
 
 **src/main/java/api: Исходный код приложения api и ui тестов**
 
-![img_7.png](img_7.png)
+![img_1.png](readme_images/img_1.png)
 
 
 -----------
 
-![img_3.png](img_3.png)
+![img_2.png](readme_images/img_2.png)
+
 
 ### **UI**
 
@@ -55,7 +56,7 @@ Datafaker.class - генерация тестовых данных
 -----------
 
 
-![src/main/api](https://github.com/BaevaEV/Notes/issues/1#issue-2087563098)
+![img_3.png](readme_images/img_3.png)
 
 ### **API**
 
@@ -69,7 +70,7 @@ Properties.class - тестовые данные (urls и paths)
 ----------
 
 
-![img_1.png](img_1.png)
+![img_4.png](readme_images/img_4.png)
 
 src/test/java/api: Тесты API с использованием RestAssured
 
@@ -77,7 +78,7 @@ src/test/java/ui: Тесты UI с использованием Selenium
 
 ----------
 
-![img_2.png](img_2.png)
+![img_5.png](readme_images/img_5.png)
 
 src/test/resources: Ресурсы для тестов (конфигурационные файлы)
 
