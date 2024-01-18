@@ -55,7 +55,7 @@ Datafaker.class - генерация тестовых данных
 -----------
 
 
-![img_4.png](img_4.png)
+![src/main/api](https://drive.google.com/file/d/1PqXnYi3fd0beabZxXVf310xrlNRkNX5G/view?usp=sharing)
 
 ### **API**
 
