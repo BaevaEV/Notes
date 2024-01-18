@@ -26,7 +26,7 @@ public class RegistrationTest extends TestBase {
 
     @Test
     @DisplayName(value = "Успешная регистрация нового пользователя")
-    @Step ("registrationHappyPathTest")
+    @Step ("Регистрация пользователя")
     public void registrationHappyPathTest(){
         step("1. Вход в приложение", () -> {
             authPage.goToAuthPage();

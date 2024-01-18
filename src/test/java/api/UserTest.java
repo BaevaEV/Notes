@@ -15,7 +15,7 @@ import java.util.Map;
 
 import static io.restassured.RestAssured.given;
 
-@DisplayName("Создание и удаление заметок")
+@DisplayName("Проверка данных пользователя")
 public class UserTest {
     private User newUser;
     private UserCreationDTO userCreationDTO;
