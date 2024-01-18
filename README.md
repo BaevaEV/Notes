@@ -55,7 +55,7 @@ Datafaker.class - генерация тестовых данных
 -----------
 
 
-![src/main/api](https://drive.google.com/file/d/1PqXnYi3fd0beabZxXVf310xrlNRkNX5G/view?usp=sharing)
+![src/main/api](https://github.com/BaevaEV/Notes/issues/1#issue-2087563098)
 
 ### **API**
 
