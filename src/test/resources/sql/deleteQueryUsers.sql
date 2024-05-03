@@ -1,0 +1,1 @@
+delete from nfaut.users where login = ?

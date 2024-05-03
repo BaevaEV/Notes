@@ -8,6 +8,7 @@ import api.restSpecification.UserSpec;
 import io.restassured.specification.RequestSpecification;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -51,10 +52,11 @@ public class UserTest {
 
 
     @Test
+    @Tag("Api")
     @DisplayName("Получение инфо созданного пользователя")
     public void getUserByLoginTest() {
-        String login = newUser.getLogin();
-        String password = newUser.getPassword();
+        String login = "BAEVA";
+        String password = "Start123";
 
         given()
                 .spec(userSpec.createRequestSpecGetUser(login, password))
@@ -66,6 +68,7 @@ public class UserTest {
     }
 
     @Test
+    @Tag("Api")
     @DisplayName("Удаление пользователя. Нет прав на удаление")
     public void deleteUserByLogin() {
         String login = newUser.getLogin();
@@ -79,6 +82,7 @@ public class UserTest {
     }
 
     @Test
+    @Tag("Api")
     @DisplayName("Неуспешная смена роли созданного пользователя")
     public void putNewRoleForUserByLogin() {
         String login = newUser.getLogin();

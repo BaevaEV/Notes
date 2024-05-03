@@ -3,16 +3,12 @@ package api.restSpecification;
 import api.dto.User;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
-import io.restassured.module.jsv.JsonSchemaValidator;
-import io.restassured.path.json.JsonPath;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 
-import static api.Properties.*;
-import static io.restassured.RestAssured.given;
+import static api.Properties.BASE_URI;
+import static api.Properties.USER_PATH;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.notNullValue;
 
 
 public class UserSpec {
@@ -26,9 +22,9 @@ public class UserSpec {
         this.authSpec = authSpec;
     }
 
-    public RequestSpecification createRequestSpecGetUser(String login, String password) {
+    public RequestSpecification createRequestSpecGetUser(String login, String token) {
         return new RequestSpecBuilder()
-                .addHeader("Authorization", "Bearer " + authSpec.getAccessToken())
+                .addHeader("Authorization", "Bearer " + token)
                 .setBaseUri(BASE_URI)
                 .setBasePath(USER_PATH+login)
                 .build();

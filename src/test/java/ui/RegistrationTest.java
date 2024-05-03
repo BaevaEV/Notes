@@ -1,10 +1,7 @@
 package ui;
 
 import io.qameta.allure.Step;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import ui.db.DBConnection;
 import ui.my_project_steps.MySteps;
 import ui.pages.TestBase;
@@ -17,27 +14,23 @@ public class RegistrationTest extends TestBase {
     MySteps mySteps = new MySteps();
     Datafaker dataFaker = new Datafaker();
     String login = dataFaker.generateName();
-    String sqlSelect = "select * from nfaut.users where login = ?";
-    String deleteQueryUsers = "delete from nfaut.users where login = ?";
-    String deleteQueryUsersRoles = "delete from nfaut.users_roles where user_id in(select id from nfaut.users where login = ? )";
-    String columnName = "id";
-    DBConnection dbConnection = new DBConnection();
     String userId;
 
     @Test
+    @Tag("Ui")
     @DisplayName(value = "Успешная регистрация нового пользователя")
     @Step ("Регистрация пользователя")
     public void registrationHappyPathTest(){
         step("1. Вход в приложение", () -> {
-            authPage.goToAuthPage();
+            mySteps.goToAuthPage();
         });
         step("2. Ввод данных", () -> {
-            registryPage.clickRegestryButton();
+            mySteps.pushButtonRegistry();
             mySteps.setInfoToRegistry(login, "123456", "my_good_tests@mail.com");
         });
         step("3. Проверка созданного пользователя в БД ", () -> {
-            registryPage.clickCreateButton();
-            userId = dbConnection.executeParameterizedQueryWithWait(sqlSelect, columnName, login,250);
+            mySteps.pushButtonRegistryCreate();
+            userId = dbConnection.executeParameterizedQueryWithWait("/sql/selectUserID.sql", "id", login,250);
             Assertions.assertNotNull(userId, "Пользователь не найден");
         });
 
@@ -48,8 +41,8 @@ public class RegistrationTest extends TestBase {
     public void afterTest() {
         this.makeScreenshot(driver);
         try {
-            dbConnection.executeParameterizedUpdateWithWait(deleteQueryUsersRoles, login, 250);
-            dbConnection.executeParameterizedUpdateWithWait(deleteQueryUsers, login, 250);
+            dbConnection.executeParameterizedUpdateWithWait("/sql/deleteQueryUsersRoles.sql", login,250);
+            dbConnection.executeParameterizedUpdateWithWait("/sql/deleteQueryUsers.sql", login,250);
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

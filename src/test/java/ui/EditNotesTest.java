@@ -24,11 +24,7 @@ public class EditNotesTest extends TestBase {
     String title = dataFaker.generateTextTitle();
     String content = dataFaker.generateTextContent();
     Color colorUtility = new Color();
-    DBConnection dbConnection = new DBConnection();
-    String login = "BAEVA";
-    String columnName = "id";
-    String sqlSelectFindNote = "select id from nfaut.notes where user_id in(select id from nfaut.users where login = ? )  order by created desc limit 1";
-    String sqlDeleteNotes = "delete from nfaut.notes where user_id in(select id from nfaut.users where login = ? )";
+    String login = "Katerina";
     String noteTitle;
     String noteColor;
     String noteContent;
@@ -39,7 +35,7 @@ public class EditNotesTest extends TestBase {
             authPage.goToAuthPage();
         });
         step("2. Ввод данных существующего пользователя", () -> {
-            mySteps.setInfoToAuthAndClick(login, "Start123");
+            mySteps.setInfoToAuthAndClick(login, "1234");
         });
         step("3. Проверка входа в приложение ", () -> {
             authPage.clickLoginButton();
@@ -48,18 +44,19 @@ public class EditNotesTest extends TestBase {
     }
 
         @Test
+        @Tag("Ui")
         @DisplayName(value = "Редактирование созданной заметки")
         public void editNewNotes() {
             for (int i = 0; i < 3; i++) {
                 step("1. Создание заметки и заполнение информации", () -> {
-                    mainPage.addNoteButtonClick();
+                    mySteps.clickAddNoteButton();
                     mySteps.fillInfoForNote(title, content, "Красный");
                 });
                 step("2. Сохранение заметки", () -> {
-                    notePage.saveNewNote();
+                    mySteps.clickSaveNoteButton();
                 });
                 step("3. Получение id созданной заметки и заполненных данных с главной страницы", () -> {
-                    String noteId = dbConnection.executeParameterizedQueryWithWait(sqlSelectFindNote, columnName, login, 200);
+                    String noteId = dbConnection.executeParameterizedQueryWithWait("/sql/selectFindNote.sql", "id", login, 200);
                     noteTitle = mainPage.getNoteTitle(noteId);
                     noteContent = mainPage.getNoteContent(noteId);
                     noteColor = mainPage.getNoteColor(noteId).replace("-color","");
@@ -70,8 +67,9 @@ public class EditNotesTest extends TestBase {
                     Assertions.assertEquals(colorUtility.getColorStyle("Красный"), noteColor, "Цвет не совпадает.");
                 });
             }
-            for (int j = 0; j < 3; j++) {
-                wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@style,'display')]/div["+(j+1)+"]/div[2]/img[1]"))).click();
+            step("4. Редактирование заметки", () -> {
+                for (int j = 0; j < 3; j++) {
+                    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[contains(@style,'display')]/div["+(j+1)+"]/div[2]/img[1]"))).click();
                 notePage.clearNoteTitleField();
                 notePage.editNoteTitleField("О зиме "+j+"");
                 notePage.clearNoteContentField();
@@ -84,6 +82,7 @@ public class EditNotesTest extends TestBase {
                 Assertions.assertEquals("О зиме "+j+"", newTitle, "Заголовок не совпадает с "+noteTitle+".");
                 Assertions.assertEquals(content, newContent, "Текст заметки не совпадает с "+noteContent+".");
             }
+            });
 
         }
 
@@ -91,8 +90,7 @@ public class EditNotesTest extends TestBase {
     @AfterEach
     public void afterTest() {
         step("Удаление созданной заметки из бд и закрытие соединения", () -> {
-            dbConnection.executeParameterizedUpdateWithWait(sqlDeleteNotes, login, 0);
-            dbConnection.closeConnection();
+            dbConnection.executeParameterizedUpdateWithWait("/sql/deleteNotes.sql", login, 0);
         });
         this.makeScreenshot(driver);
     }

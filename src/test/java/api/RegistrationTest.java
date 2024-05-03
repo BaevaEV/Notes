@@ -6,7 +6,7 @@ import api.restSpecification.RegSpec;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
-
+import org.junit.jupiter.api.Tag;
 
 
 @DisplayName(value = "Проверка регистрации")
@@ -24,6 +24,7 @@ public class RegistrationTest {
     }
 
     @Test
+    @Tag("Api")
     @DisplayName(value = "Проверка регистрации только с обязательными полями")
     public void registryWithRequiredFieldsFieldsTest() {
         userCreationDTO = UserCreationDTO.builder().login(newUser.getLogin())
@@ -36,6 +37,7 @@ public class RegistrationTest {
 
 
     @Test
+    @Tag("Api")
     @DisplayName(value = "Проверка регистрации со всеми полями")
     public void registryWithAllFieldsFieldsTest() {
         userCreationDTO = UserCreationDTO.builder().login(newUser.getLogin())
@@ -50,6 +52,7 @@ public class RegistrationTest {
 
 
     @Test
+    @Tag("Api")
     @DisplayName(value = "Проверка регистрации только с логином")
     public void registryOnlyWithLoginTest() {
         userCreationDTO = UserCreationDTO.builder().login(newUser.getLogin())
@@ -60,6 +63,7 @@ public class RegistrationTest {
     }
 
     @Test
+    @Tag("Api")
     @DisplayName("Создание пользователя и заметки")
     public void createNewUserAndNote() {
         userCreationDTO = UserCreationDTO.builder().login(newUser.getLogin())

@@ -1,0 +1,1 @@
+select id from nfaut.notes where user_id in(select id from nfaut.users where login = ? )  order by created desc limit 1

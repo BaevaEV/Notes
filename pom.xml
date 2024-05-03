@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.example</groupId>
-    <artifactId>ros-test</artifactId>
+    <artifactId>Note</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>
@@ -152,19 +152,25 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>3.0.0-M8</version>
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
                     <argLine>
                         -javaagent:${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar
                     </argLine>
-                    <parallel>methods</parallel>
-                    <threadCount>5</threadCount>
+<!--                    <parallel>methods</parallel>-->
+<!--                    <threadCount>5</threadCount>-->
                     <properties>
                         <property>
                             <name>listener</name>
                             <value>io.qameta.allure.junit5.AllureJunit5</value>
                         </property>
+<!--                        <configurationParameters>-->
+<!--                            junit.jupiter.execution.parallel.enabled=true-->
+<!--                            junit.jupiter.execution.parallel.config.strategy=fixed-->
+<!--                            junit.jupiter.execution.parallel.config.fixed.parallelism=2-->
+<!--                            junit.jupiter.execution.parallel.config.fixed.max-pool-size=2-->
+<!--                        </configurationParameters>-->
                     </properties>
                 </configuration>
             </plugin>

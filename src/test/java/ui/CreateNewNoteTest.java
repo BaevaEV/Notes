@@ -1,7 +1,6 @@
 package ui;
 
 import org.junit.jupiter.api.*;
-import ui.db.DBConnection;
 import ui.my_project_steps.MySteps;
 import ui.pages.TestBase;
 import utils.Color;
@@ -19,11 +18,7 @@ public class CreateNewNoteTest extends TestBase {
     String title = dataFaker.generateTextTitle();
     String content = dataFaker.generateTextContent();
     Color colorUtility = new Color();
-    DBConnection dbConnection = new DBConnection();
-    String login = "BAEVA";
-    String columnName = "id";
-    String sqlSelectFindNote = "select id from nfaut.notes where user_id in(select id from nfaut.users where login = ? )  order by created desc limit 1";
-    String sqlDeleteNotes = "delete from nfaut.notes where user_id in(select id from nfaut.users where login = ? )";
+    String login = "Katerina";
     String noteTitle;
     String noteColor;
     String noteContent;
@@ -32,29 +27,29 @@ public class CreateNewNoteTest extends TestBase {
     @BeforeEach
     public void start() {
         step("1. Вход в приложение", () -> {
-            authPage.goToAuthPage();
+            mySteps.goToAuthPage();
         });
         step("2. Ввод данных существующего пользователя", () -> {
-            mySteps.setInfoToAuthAndClick(login, "Start123");
+            mySteps.setInfoToAuthAndClick(login, "1234");
         });
         step("3. Проверка входа в приложение ", () -> {
-            authPage.clickLoginButton();
-            Assertions.assertTrue(mainPage.addNoteButtonDisplayed());
+            mySteps.clickLoginAndCheck();
         });
     }
 
     @Test
+    @Tag("Ui")
     @DisplayName(value = "Успешное создание заметки")
     public void createNoteHappyPathTest() {
         step("1. Создание заметки и заполнение информации", () -> {
-            mainPage.addNoteButtonClick();
+            mySteps.clickAddNoteButton();
             mySteps.fillInfoForNote(title, content, "Красный");
         });
         step("2. Сохранение заметки", () -> {
-            notePage.saveNewNote();
+            mySteps.clickSaveNoteButton();
         });
         step("3. Получение id созданной заметки и заполненных данных с главной страницы", () -> {
-            String noteId = dbConnection.executeParameterizedQueryWithWait(sqlSelectFindNote, columnName, login, 200);
+            String noteId = dbConnection.executeParameterizedQueryWithWait("/sql/selectFindNote.sql", "id", login, 200);
             noteTitle = mainPage.getNoteTitle(noteId);
             noteContent = mainPage.getNoteContent(noteId);
             noteColor = mainPage.getNoteColor(noteId).replace("-color", "");
@@ -68,19 +63,20 @@ public class CreateNewNoteTest extends TestBase {
 
 
     @Test
+    @Tag("Ui")
     @DisplayName(value = "Создание заметок с разными цветами")
     public void createNotesWithDifferentColorsTest() {
         Set<String> colorNames = colorUtility.getColorMapping().keySet();
         for (String colorName : colorNames) {
             step("1. Создание заметки и заполнение информации", () -> {
-                mainPage.addNoteButtonClick();
+                mySteps.clickAddNoteButton();
                 mySteps.fillInfoForNote("Заметка " + colorName + "", content, colorName);
             });
             step("2. Сохранение заметки", () -> {
-                notePage.saveNewNote();
+                mySteps.clickSaveNoteButton();
             });
             step("3. Получение id созданной заметки и заполненных данных с главной страницы", () -> {
-                String noteId = dbConnection.executeParameterizedQueryWithWait(sqlSelectFindNote, columnName, login, 250);
+                String noteId = dbConnection.executeParameterizedQueryWithWait("/sql/selectFindNote.sql", "id", login, 250);
                 noteTitle = mainPage.getNoteTitle(noteId);
                 noteContent = mainPage.getNoteContent(noteId);
                 noteColor = mainPage.getNoteColor(noteId).replace("-color", "");
@@ -97,8 +93,7 @@ public class CreateNewNoteTest extends TestBase {
     @AfterEach
     public void afterTest() {
         step("Удаление созданной заметки из бд и закрытие соединения", () -> {
-            dbConnection.executeParameterizedUpdateWithWait(sqlDeleteNotes, login, 0);
-            dbConnection.closeConnection();
+            dbConnection.executeParameterizedUpdateWithWait("/sql/deleteNotes.sql", login, 0);
         });
         this.makeScreenshot(driver);
     }
