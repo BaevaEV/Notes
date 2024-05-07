@@ -1,4 +1,4 @@
-package api.dto;
+package api.pojo;
 
 import lombok.Data;
 import utils.Datafaker;
@@ -16,15 +16,14 @@ public class User {
     private List<Note> notes;
 
     public void setDefaultRoles() {
-        Datafaker dataFaker = new Datafaker();
-        String roleName = dataFaker.generateRole();
+        Role defaultRole = new Role();
+        defaultRole.setId(2);
+        defaultRole.setName("ROLE_USER");
 
-        Role defaultRole = new Role(2, roleName);
-        List<Role> defaultRolesList = new ArrayList<>();
-        defaultRolesList.add(defaultRole);
-        this.roles = defaultRolesList;
+        List<Role> defaultListRole = new ArrayList<>();
+        defaultListRole.add(defaultRole);
 
-
+        this.roles = defaultListRole;
     }
 
     public User generateUser() {
@@ -41,11 +40,8 @@ public class User {
     }
 
     public void setDefaultNotes() {
-        Datafaker dataFaker = new Datafaker();
-        String textTitle = dataFaker.generateTextTitle();
-        String textContent = dataFaker.generateTextTitle();
 
-        Note defaultNote = new Note(null, textTitle, textContent, "Красный", 1);
+        Note defaultNote = new Note();
         List<Note> defaultNotesList = new ArrayList<>();
         defaultNotesList.add(defaultNote);
         this.notes = defaultNotesList;

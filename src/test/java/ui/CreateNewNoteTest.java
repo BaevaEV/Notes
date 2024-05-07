@@ -1,7 +1,7 @@
 package ui;
 
 import org.junit.jupiter.api.*;
-import ui.my_project_steps.MySteps;
+import ui.my_project_steps.MyUISteps;
 import ui.pages.TestBase;
 import utils.Color;
 import utils.Datafaker;
@@ -13,7 +13,7 @@ import static io.qameta.allure.Allure.step;
 
 @DisplayName(value = "Создание новой заметки")
 public class CreateNewNoteTest extends TestBase {
-    MySteps mySteps = new MySteps();
+    MyUISteps myUISteps = new MyUISteps(getDriver());
     Datafaker dataFaker = new Datafaker();
     String title = dataFaker.generateTextTitle();
     String content = dataFaker.generateTextContent();
@@ -27,13 +27,13 @@ public class CreateNewNoteTest extends TestBase {
     @BeforeEach
     public void start() {
         step("1. Вход в приложение", () -> {
-            mySteps.goToAuthPage();
+            myUISteps.goToAuthPage();
         });
         step("2. Ввод данных существующего пользователя", () -> {
-            mySteps.setInfoToAuthAndClick(login, "1234");
+            myUISteps.setInfoToAuthAndClick(login, "1234");
         });
         step("3. Проверка входа в приложение ", () -> {
-            mySteps.clickLoginAndCheck();
+            myUISteps.clickLoginAndCheck();
         });
     }
 
@@ -42,17 +42,17 @@ public class CreateNewNoteTest extends TestBase {
     @DisplayName(value = "Успешное создание заметки")
     public void createNoteHappyPathTest() {
         step("1. Создание заметки и заполнение информации", () -> {
-            mySteps.clickAddNoteButton();
-            mySteps.fillInfoForNote(title, content, "Красный");
+            myUISteps.clickAddNoteButton();
+            myUISteps.fillInfoForNote(title, content, "Красный");
         });
         step("2. Сохранение заметки", () -> {
-            mySteps.clickSaveNoteButton();
+            myUISteps.clickSaveNoteButton();
         });
         step("3. Получение id созданной заметки и заполненных данных с главной страницы", () -> {
             String noteId = dbConnection.executeParameterizedQueryWithWait("/sql/selectFindNote.sql", "id", login, 200);
-            noteTitle = mainPage.getNoteTitle(noteId);
-            noteContent = mainPage.getNoteContent(noteId);
-            noteColor = mainPage.getNoteColor(noteId).replace("-color", "");
+            noteTitle = TestBase.getMainPage().getNoteTitle(noteId);
+            noteContent = TestBase.getMainPage().getNoteContent(noteId);
+            noteColor = TestBase.getMainPage().getNoteColor(noteId).replace("-color", "");
         });
         step("3. Сравнение и проверка отображаемых данных на соответствие изначально введенным", () -> {
             Assertions.assertEquals(title, noteTitle, "Заголовок не совпадает с " + noteTitle + ".");
@@ -69,17 +69,17 @@ public class CreateNewNoteTest extends TestBase {
         Set<String> colorNames = colorUtility.getColorMapping().keySet();
         for (String colorName : colorNames) {
             step("1. Создание заметки и заполнение информации", () -> {
-                mySteps.clickAddNoteButton();
-                mySteps.fillInfoForNote("Заметка " + colorName + "", content, colorName);
+                myUISteps.clickAddNoteButton();
+                myUISteps.fillInfoForNote("Заметка " + colorName + "", content, colorName);
             });
             step("2. Сохранение заметки", () -> {
-                mySteps.clickSaveNoteButton();
+                myUISteps.clickSaveNoteButton();
             });
             step("3. Получение id созданной заметки и заполненных данных с главной страницы", () -> {
                 String noteId = dbConnection.executeParameterizedQueryWithWait("/sql/selectFindNote.sql", "id", login, 250);
-                noteTitle = mainPage.getNoteTitle(noteId);
-                noteContent = mainPage.getNoteContent(noteId);
-                noteColor = mainPage.getNoteColor(noteId).replace("-color", "");
+                noteTitle = TestBase.getMainPage().getNoteTitle(noteId);
+                noteContent = TestBase.getMainPage().getNoteContent(noteId);
+                noteColor = TestBase.getMainPage().getNoteColor(noteId).replace("-color", "");
             });
             step("4. Сравнение и проверка отображаемых данных на соответствие изначально введенным", () -> {
                 Assertions.assertEquals("Заметка " + colorName, noteTitle, "Заголовок не совпадает.");
@@ -95,7 +95,7 @@ public class CreateNewNoteTest extends TestBase {
         step("Удаление созданной заметки из бд и закрытие соединения", () -> {
             dbConnection.executeParameterizedUpdateWithWait("/sql/deleteNotes.sql", login, 0);
         });
-        this.makeScreenshot(driver);
+        this.makeScreenshot(driver.get());
     }
 
 }

@@ -1,83 +1,64 @@
 package api;
 
-import api.dto.Note;
-import api.restSpecification.AuthSpec;
+import api.dto.NoteDTO;
+import api.pojo.Note;
 import api.restSpecification.NoteSpec;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
+import ui.my_project_steps.MyApiSteps;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static io.restassured.RestAssured.given;
+import static ui.my_project_steps.MyApiSteps.getMethod;
+import static ui.my_project_steps.MyApiSteps.postMethod;
 
 @DisplayName("Создание и удаление заметок")
 public class NoteTest {
-    AuthSpec authSpec = new AuthSpec();
-    NoteSpec noteSpec = new NoteSpec();
-    String accessToken;
+    private Note newNote;
+    private NoteDTO noteDTO;
 
 
     @BeforeEach
     public void before() {
-        authSpec.createRequestSpecAuth();
-        Map<String, String> loginParams = new HashMap<>();
-        loginParams.put("username", "Katerina");
-        loginParams.put("password", "1234");
-        accessToken = authSpec.getAccessToken(loginParams);
+        newNote = new Note();
+        newNote = newNote.generateNote();
 
     }
 
-    @Test
-    @Tag("Api")
-    @DisplayName("Получение заметок пользователя")
-    public void getUsersNotesByLoginTest() {
-        String login = "BAEVA";
-        given()
-                .spec(noteSpec.createRequestSpecGetNote(accessToken, login))
-                .when()
-                .get()
-                .then()
-                .log().all()
-                .statusCode(200);
-    }
 
     @Test
     @Tag("Api")
     @DisplayName("Создание заметки")
-    public void createNewNoteTest() {
+    public void createNoteTest() {
         String login = "Katerina";
-        Note note = new Note(null,"Заметочка", "За ме то чка", "red", 1);
-        List<Note> noteList = Collections.singletonList(note);
-        given()
-                .spec(noteSpec.createRequestSpecGetNote(accessToken, login))
-                .body(noteList)
-                .when()
-                .post()
-                .then()
-                .log().all()
-                .statusCode(201);
+        String password = "1234";
+        noteDTO = NoteDTO.builder()
+                .name(newNote.getName())
+                .priority(0)
+                .build();
+        String accessToken = MyApiSteps.getAccessToken(login, password);
+        NoteSpec.createRequestSpecCreateNote(login, accessToken, noteDTO);
+        NoteSpec.createResponseSpecNote(201);
+        postMethod(NoteSpec.requestSpecification, NoteSpec.responseSpecification);
+        NoteSpec.createJsonSchemaValidationSpec("schemes/new_note_schema.json");
+
     }
 
     @Test
     @Tag("Api")
-    @DisplayName("Редактирование заметки")
-    public void editNoteTest() {
+    @DisplayName("Все заметки пользователя")
+    public void getUsersNotesByLoginTest() {
+        String name = "Заметка";
+        int count = 1000;
         String login = "Katerina";
-        Note note = new Note(null,"Заметка", "За ме то чка", "red", 1);
-        List<Note> noteList = Collections.singletonList(note);
-        given()
-                .spec(noteSpec.createRequestSpecGetNote(accessToken, login))
-                .body(noteList)
-                .when()
-                .post()
-                .then()
-                .log().all()
-                .statusCode(201);
+        String password = "1234";
+        String accessToken = MyApiSteps.getAccessToken(login, password);
+        NoteSpec.createRequestSpecGetNote(login, accessToken, name, count);
+        NoteSpec.createResponseSpecNote(200);
+        getMethod(NoteSpec.requestSpecification, NoteSpec.responseSpecification);
+
     }
+
+
 
 }

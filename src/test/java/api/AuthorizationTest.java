@@ -1,6 +1,8 @@
 package api;
 
+import api.dto.UserDTO;
 import api.restSpecification.AuthSpec;
+import api.restSpecification.RegSpec;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
@@ -8,10 +10,12 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
+import static ui.my_project_steps.MyApiSteps.getAccessToken;
+import static ui.my_project_steps.MyApiSteps.postMethod;
+
 @DisplayName(value = "Проверка авторизации")
 public class AuthorizationTest {
-    AuthSpec authSpec = new AuthSpec();
-
+    private UserDTO userDTO;
 
 
     @Test
@@ -21,9 +25,9 @@ public class AuthorizationTest {
         Map<String, String> loginParams = new HashMap<>();
         loginParams.put("username", "Katerina");
         loginParams.put("password", "1234");
-        authSpec.getAccessToken(loginParams);
-        authSpec.createRequestSpecAuth();
-        authSpec.createResponseSpecAuth(201);
+        AuthSpec.createRequestSpecAuth(loginParams);
+        AuthSpec.createResponseSpecAuth(201);
+        postMethod(AuthSpec.requestSpecification, AuthSpec.responseSpecification);
     }
 
     @Test
@@ -31,10 +35,11 @@ public class AuthorizationTest {
     @DisplayName("Авторизация несуществующего пользователя")
     public void authorizationNewClientTest() {
         Map<String, String> loginParams = new HashMap<>();
-        loginParams.put("username", "Katerina");
+        loginParams.put("username", "Katerok");
         loginParams.put("password", "1234");
-        authSpec.getAccessTokenBadRequest(loginParams);
-
+        AuthSpec.createRequestSpecAuth(loginParams);
+        AuthSpec.createResponseSpecAuth(403);
+        postMethod(AuthSpec.requestSpecification, AuthSpec.responseSpecification);
     }
 
 
@@ -44,7 +49,10 @@ public class AuthorizationTest {
     public void authorizationNewClientLoginTest() {
         Map<String, String> loginParams = new HashMap<>();
         loginParams.put("username", "Katerina");
-        authSpec.getAccessTokenBadRequest(loginParams);
+        AuthSpec.createRequestSpecAuth(loginParams);
+        AuthSpec.createResponseSpecAuth(403);
+        postMethod(AuthSpec.requestSpecification, AuthSpec.responseSpecification);
+
     }
 
 }

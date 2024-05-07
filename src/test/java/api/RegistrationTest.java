@@ -1,19 +1,20 @@
 package api;
 
-import api.dto.User;
-import api.dto.UserCreationDTO;
+import api.dto.UserDTO;
+import api.pojo.User;
 import api.restSpecification.RegSpec;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
 
+import static ui.my_project_steps.MyApiSteps.postMethod;
+
 
 @DisplayName(value = "Проверка регистрации")
 public class RegistrationTest {
     private User newUser;
-    private UserCreationDTO userCreationDTO;
-    RegSpec regSpec = new RegSpec();
+    private UserDTO userDTO;
 
 
     @Before
@@ -27,27 +28,29 @@ public class RegistrationTest {
     @Tag("Api")
     @DisplayName(value = "Проверка регистрации только с обязательными полями")
     public void registryWithRequiredFieldsFieldsTest() {
-        userCreationDTO = UserCreationDTO.builder().login(newUser.getLogin())
+        userDTO = UserDTO.builder()
+                .login(newUser.getLogin())
                 .password(newUser.getPassword())
                 .build();
-        regSpec.createRequestSpecReg(userCreationDTO);
-        regSpec.createResponseSpecReg(201);
-        regSpec.postRegistration();
+        RegSpec.createRequestSpecReg(userDTO);
+        RegSpec.createResponseSpecReg(201);
+        postMethod(RegSpec.requestSpecification, RegSpec.responseSpecification);
     }
 
 
     @Test
     @Tag("Api")
     @DisplayName(value = "Проверка регистрации со всеми полями")
-    public void registryWithAllFieldsFieldsTest() {
-        userCreationDTO = UserCreationDTO.builder().login(newUser.getLogin())
+    public void registryWithAllFieldsTest() {
+        userDTO = UserDTO.builder()
+                .login(newUser.getLogin())
                 .password(newUser.getPassword())
                 .email((newUser.getEmail()))
                 .roles(newUser.getRoles())
                 .build();
-        regSpec.createRequestSpecReg(userCreationDTO);
-        regSpec.createResponseSpecReg(201);
-        regSpec.postRegistration();
+        RegSpec.createRequestSpecReg(userDTO);
+        postMethod(RegSpec.requestSpecification, RegSpec.responseSpecification);
+        RegSpec.createResponseSpecReg(201);
     }
 
 
@@ -55,28 +58,29 @@ public class RegistrationTest {
     @Tag("Api")
     @DisplayName(value = "Проверка регистрации только с логином")
     public void registryOnlyWithLoginTest() {
-        userCreationDTO = UserCreationDTO.builder().login(newUser.getLogin())
+        userDTO = UserDTO.builder()
+                .login(newUser.getLogin())
                 .build();
-        regSpec.createRequestSpecReg(userCreationDTO);
-        regSpec.createResponseSpecReg(500);
-        regSpec.postRegistration();
+        RegSpec.createRequestSpecReg(userDTO);
+        RegSpec.createResponseSpecReg(500);
+        postMethod(RegSpec.requestSpecification, RegSpec.responseSpecification);
     }
 
     @Test
     @Tag("Api")
     @DisplayName("Создание пользователя и заметки")
     public void createNewUserAndNote() {
-        userCreationDTO = UserCreationDTO.builder().login(newUser.getLogin())
+        userDTO = UserDTO.builder().login(newUser.getLogin())
                 .password(newUser.getPassword())
                 .email((newUser.getEmail()))
                 .roles(newUser.getRoles())
                 .notes(newUser.getNotes())
                 .build();
 
-        regSpec.createRequestSpecReg(userCreationDTO);
-        regSpec.createResponseSpecReg(201);
-        regSpec.createJsonSchemaValidationSpec("schemes/reg_schema.json");
-        regSpec.postRegistration();
+        RegSpec.createRequestSpecReg(userDTO);
+        RegSpec.createResponseSpecReg(201);
+        postMethod(RegSpec.requestSpecification, RegSpec.responseSpecification);
+        RegSpec.createJsonSchemaValidationSpec("schemes/reg_schema.json");
 
     }
 }

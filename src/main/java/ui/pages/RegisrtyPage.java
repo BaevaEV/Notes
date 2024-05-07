@@ -12,7 +12,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 
-public class RegesrtyPage {
+public class RegisrtyPage {
     private WebDriver driver;
     WebDriverWait wait;
 
@@ -33,7 +33,7 @@ public class RegesrtyPage {
     private WebElement createButton;
 
 
-    public RegesrtyPage(WebDriver driver) {
+    public RegisrtyPage(WebDriver driver) {
         this.driver = driver;
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(60));
         PageFactory.initElements(driver, this);
@@ -52,7 +52,7 @@ public class RegesrtyPage {
         mailField.sendKeys(email);
     }
 
-    public void clickRegestryButton() {
+    public void clickRegistryButton() {
         new FluentWait<>(driver)
                 .withTimeout(Duration.ofSeconds(240))
                 .ignoring(NoSuchElementException.class)

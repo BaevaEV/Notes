@@ -1,6 +1,6 @@
 package api.restSpecification;
 
-import api.dto.UserCreationDTO;
+import api.dto.UserDTO;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
@@ -15,34 +15,28 @@ import static api.Properties.PATH_REGISTRATION;
 
 
 public class RegSpec {
-    private RequestSpecification requestSpecification;
-    private ResponseSpecification responseSpecification;
+    public static RequestSpecification requestSpecification;
+    public static ResponseSpecification responseSpecification;
 
-    public void createRequestSpecReg(UserCreationDTO userCreationDTO){
+    public static void createRequestSpecReg(UserDTO userDTO){
         requestSpecification = new RequestSpecBuilder()
                 .setBaseUri(BASE_URI)
                 .setBasePath(PATH_REGISTRATION)
                 .setContentType(ContentType.JSON)
-                .setBody(userCreationDTO)
+                .setBody(userDTO)
                 .build();
     }
 
-    public void createResponseSpecReg(int status){
+    public static void createResponseSpecReg(int status){
         responseSpecification = new ResponseSpecBuilder()
                 .expectStatusCode(status)
                 .build();
     }
 
-    public void createJsonSchemaValidationSpec(String schemaPath) {
+    public static void createJsonSchemaValidationSpec(String schemaPath) {
         RestAssured.defaultParser = Parser.JSON;
         responseSpecification.expect().body(JsonSchemaValidator.matchesJsonSchemaInClasspath(schemaPath));
     }
 
-
-    public void postRegistration(){
-        RestAssured.given(requestSpecification).log().all()
-                .post()
-                .then().log().all().spec(responseSpecification);
-    }
 
 }

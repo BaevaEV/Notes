@@ -17,52 +17,22 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.not;
 
 public class AuthSpec {
-    private String access_token;
-    private String refresh_token;
-    private RequestSpecification requestSpecification;
-    private ResponseSpecification responseSpecification;
+    public static RequestSpecification requestSpecification;
+    public static ResponseSpecification responseSpecification;
 
-    public void createRequestSpecAuth() {
+    public static void createRequestSpecAuth(Map<String , String> loginParams) {
         requestSpecification = new RequestSpecBuilder()
-                .addHeader("Authorization", "Bearer " + access_token)
                 .setContentType(ContentType.JSON)
                 .setBaseUri(BASE_URI)
                 .setBasePath(LOGIN_PATH)
+                .addParams(loginParams)
                 .build();
     }
 
-    public void createResponseSpecAuth(int status) {
+    public static void createResponseSpecAuth(int status) {
         responseSpecification = new ResponseSpecBuilder()
                 .expectStatusCode(status)
                 .build();
     }
 
-    public String getAccessToken(Map<String , String> loginParams) {
-        JsonPath responseBody = given()
-                .log().all()
-                .params(loginParams)
-                .get(BASE_URI + LOGIN_PATH)
-                .jsonPath();
-
-        access_token = responseBody.get("access_token");
-        refresh_token = responseBody.get("refresh_token");
-        Assertions.assertNotNull(access_token, "Не был получен access_token");
-        return access_token;
-    }
-
-    public String getRefreshAccessToken() {
-        return refresh_token;
-    }
-
-    public String getAccessToken() {
-        return access_token;
-    }
-
-    public void getAccessTokenBadRequest(Map<String , String> loginParams) {
-         given()
-                .log().all()
-                .params(loginParams)
-                .get(BASE_URI + LOGIN_PATH)
-                 .then().statusCode(not(equalTo(201)));
-    }
 }

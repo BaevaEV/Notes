@@ -1,6 +1,6 @@
 package api.restSpecification;
 
-import api.dto.User;
+import api.pojo.User;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
 import io.restassured.specification.RequestSpecification;
@@ -9,6 +9,7 @@ import io.restassured.specification.ResponseSpecification;
 import static api.Properties.BASE_URI;
 import static api.Properties.USER_PATH;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static ui.my_project_steps.MyApiSteps.getAccessToken;
 
 
 public class UserSpec {
@@ -37,25 +38,25 @@ public class UserSpec {
                 .expectStatusCode(status)
                 .build();
     }
+//
+//    public RequestSpecification createRequestSpecDeleteUser(String login) {
+//        return new RequestSpecBuilder()
+//                .addHeader("Authorization", "Bearer " + getAccessToken())
+//                .setBaseUri(BASE_URI)
+//                .setBasePath(USER_PATH+login)
+//                .build();
+//    }
 
-    public RequestSpecification createRequestSpecDeleteUser(String login) {
-        return new RequestSpecBuilder()
-                .addHeader("Authorization", "Bearer " + authSpec.getAccessToken())
-                .setBaseUri(BASE_URI)
-                .setBasePath(USER_PATH+login)
-                .build();
-    }
+//    public RequestSpecification createRequestSpecRole(String login) {
+//        return new RequestSpecBuilder()
+//                .addHeader("Authorization", "Bearer " + authSpec.getRefreshAccessToken() )
+//                .setBaseUri(BASE_URI)
+//                .setBasePath(USER_PATH+login+"/role/ROLE_ADMIN")
+//                .build();
 
-    public RequestSpecification createRequestSpecRole(String login) {
-        return new RequestSpecBuilder()
-                .addHeader("Authorization", "Bearer " + authSpec.getRefreshAccessToken() )
-                .setBaseUri(BASE_URI)
-                .setBasePath(USER_PATH+login+"/role/ROLE_ADMIN")
-                .build();
-
-
-
-    }
+//
+//
+//    }
 
 
 
