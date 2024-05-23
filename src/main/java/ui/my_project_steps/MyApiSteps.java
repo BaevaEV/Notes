@@ -7,8 +7,7 @@ import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
 import org.junit.jupiter.api.Assertions;
-import org.hamcrest.MatcherAssert.assertThat;
-import org.hamcrest.Matchers.*;
+
 
 import static api.Properties.BASE_URI;
 import static api.Properties.LOGIN_PATH;
@@ -23,7 +22,6 @@ public class MyApiSteps {
         Response response = RestAssured.given(requestSpec).log().all()
                 .post();
                 response.then().log().all().spec(responseSpec);
-                assertThat
     }
 
     @Step(value = "PUT")

@@ -80,6 +80,7 @@ public abstract class TestBase {
         }
     }
 
+
     public static AuthPage getAuthPage() {
         return authPage.get();
     }
