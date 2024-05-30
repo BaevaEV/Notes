@@ -24,7 +24,7 @@ public class MyApiSteps {
                 response.then().log().all().spec(responseSpec);
     }
 
-    @Step(value = "PUT")
+    @Step(value = "PUTINGGG")
     public static void putMethod(RequestSpecification requestSpec, ResponseSpecification responseSpec){
         RestAssured.given(requestSpec).log().all()
                 .put()
